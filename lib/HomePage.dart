@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ChatBot.dart';
+import 'SendMony.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,6 +9,7 @@ class HomePage extends StatelessWidget {
       home: homePage(),
       routes: {
         '/botPage'  : (context)=>ChatBot(),
+        '/membersPage' : (context)=> SendMonyPage(),
       },
     );
   }
@@ -72,7 +74,7 @@ class _homePageState extends State<homePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("20,600",style: TextStyle(
+                        Text("20,600 \$",style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w700
                         ),),
@@ -87,7 +89,7 @@ class _homePageState extends State<homePage> {
                       height: 60,
                       width: 60,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                       shape: BoxShape.circle,
                         color: Color(0xffffac30)
                       ),
                       child: Icon(
@@ -132,9 +134,12 @@ class _homePageState extends State<homePage> {
                         shape: BoxShape.circle,
                         color: Color(0xffffac30),
                       ),
-                      child: Icon(
-                        Icons.add,
-                        size: 40,
+                      child: IconButton(
+                        onPressed: (){openMember();},
+                        iconSize: 40,
+                        icon: Icon(Icons.add) ,
+                        // Icons.add,
+                        // size: 40,
                       ),
                     ),
                     avatarWidget("avatar1", "Eslam"),
@@ -231,6 +236,9 @@ class _homePageState extends State<homePage> {
   }
   openBot(){
     Navigator.pushNamed(context, '/botPage');
+  }
+  openMember(){
+    Navigator.pushNamed(context, '/membersPage');
   }
 }
 

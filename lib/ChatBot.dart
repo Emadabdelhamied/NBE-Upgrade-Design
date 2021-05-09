@@ -32,8 +32,8 @@ class _ChatBotState extends State<ChatBot> {
           title: Text(
             "NBE Bot Assist",
           ),
-          //Image.asset('asset/images/logo.png'),
           backgroundColor: Colors.orange,
+
         ),
         body: Container(
             child:Container(

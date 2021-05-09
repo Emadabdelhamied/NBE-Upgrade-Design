@@ -29,9 +29,15 @@ class _SignUpState extends State<SignUp> {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+             mainAxisAlignment: MainAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 100,
+                  child: Image.asset('asset/images/NBE-removebg.png'),
+                ),
+                SizedBox(height: 40,),
                 Container(
                   margin: EdgeInsets.all(5.0),
                   child: TextField(
@@ -77,7 +83,7 @@ class _SignUpState extends State<SignUp> {
                         hintStyle: TextStyle(fontSize: 10,),
                         prefixIcon: Icon(Icons.account_balance_wallet,color: Colors.orange,)
                     ),
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                   ),
                 ),
                 Container(

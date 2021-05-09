@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'HomeWithSidebar.dart';
 import 'SignUp.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -11,7 +12,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home:Center(
+          child: AnimatedSplashScreen(
+            splash: Image.asset(
+              'asset/images/NBE-removebg.png',
+            ),
+            nextScreen: MyHomePage(),
+            splashTransition: SplashTransition.rotationTransition,
+            splashIconSize: 800,
+          )),
+      //MyHomePage(),
       routes: {
         '/homePage' : (context)=>HomeWithSidebar(),
         '/SignUpPage':(context)=>SignUpPage(),

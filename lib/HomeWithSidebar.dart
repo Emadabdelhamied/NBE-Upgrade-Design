@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
 import 'main.dart';
+import 'ProfilePage.dart';
+import 'Transactions.dart';
+import 'Help.dart';
 class HomeWithSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,28 +11,34 @@ class HomeWithSidebar extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: homeWithSidebar(),
       routes: {
-        '/loginPage': (context)=>MyHomePage(),
-        '/homePage' : (context)=>HomeWithSidebar(),
-
+        '/loginPage': (context) => MyHomePage(),
+        '/homePage': (context) => HomeWithSidebar(),
+        '/ProfilePage': (context) => ProfilePage(),
+        '/TransPage' :(context)=> TransactionPage(),
+        '/HelpPage' :(context)=> HelpPage(),
       },
     );
   }
 }
+
 class homeWithSidebar extends StatefulWidget {
   @override
   _homeWithSidebarState createState() => _homeWithSidebarState();
 }
 
-class _homeWithSidebarState extends State<homeWithSidebar> with TickerProviderStateMixin{
+class _homeWithSidebarState extends State<homeWithSidebar>
+    with TickerProviderStateMixin {
   bool sideBarActive = false;
   AnimationController rotationController;
   @override
   void initState() {
     // TODO: implement initState
 
-    rotationController = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    rotationController =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +52,11 @@ class _homeWithSidebarState extends State<homeWithSidebar> with TickerProviderSt
                 children: [
                   Container(
                     height: 150,
-                    width: MediaQuery.of(context).size.width*0.6,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(60)),
-                      color: Colors.white
-                    ),
+                        borderRadius:
+                            BorderRadius.only(bottomRight: Radius.circular(60)),
+                        color: Colors.white),
                     child: Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -56,28 +65,42 @@ class _homeWithSidebarState extends State<homeWithSidebar> with TickerProviderSt
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xfff1f3f6),
-                              image: DecorationImage(
-                                image: AssetImage('asset/images/avatar1.png'),
-                                fit: BoxFit.contain
-                              )
-                            ),
+                                shape: BoxShape.circle,
+                                color: Color(0xfff1f3f6),
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('asset/images/profile.jpg'),
+                                    fit: BoxFit.contain)),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Emad ", style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w700
-                              ),),
-                              Text("Egypt", style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey
-                              ),)
+                              // Text("Emad ", style: TextStyle(
+                              //   fontSize: 19,
+                              //   fontWeight: FontWeight.w700
+                              // ),),
+                              TextButton(
+                                onPressed: openProfile,
+                                child: Text(
+                                  'Emad',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                style:
+                                    TextButton.styleFrom(primary: Colors.black),
+                              ),
+                              Text(
+                                "Egypt",
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey),
+                              )
                             ],
                           )
                         ],
@@ -89,11 +112,38 @@ class _homeWithSidebarState extends State<homeWithSidebar> with TickerProviderSt
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     navigatorTitle("Home", true),
-                    navigatorTitle("Profile", false),
-                    navigatorTitle("Transactions", false),
-                    navigatorTitle("Help", false),
+                    TextButton(
+                      onPressed: () {
+                        openProfile();
+                      },
+                      child: Text(
+                        'Profile',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      style: TextButton.styleFrom(primary: Colors.black),
+                    ),
+                    TextButton(
+                      onPressed: () {openTransaction();},
+                      child: Text(
+                        'Transactions',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      style: TextButton.styleFrom(primary: Colors.black),
+                    ),
+                    TextButton(
+                      onPressed: () {openHelp();},
+                      child: Text(
+                        'Help ',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
+                      style: TextButton.styleFrom(primary: Colors.black),
+                    ),
                   ],
                 ),
               ),
@@ -107,43 +157,45 @@ class _homeWithSidebarState extends State<homeWithSidebar> with TickerProviderSt
                     ),
                     TextButton(
                       onPressed: openmain,
-                      child: Text('Logout',style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700
-                      ),),
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
                       style: TextButton.styleFrom(primary: Colors.black),
                     ),
-
-                    // Text("Logout", style: TextStyle(
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.w700
-                    // ),)
                   ],
                 ),
               ),
               Container(
                 alignment: Alignment.bottomLeft,
                 padding: EdgeInsets.all(20),
-                child: Text("Ver 2.0.1",style: TextStyle(
-                  color: Colors.grey
-                ),),
+                child: Text(
+                  "Ver 2.0.1",
+                  style: TextStyle(color: Colors.grey),
+                ),
               )
             ],
           ),
           AnimatedPositioned(
             duration: Duration(milliseconds: 200),
-            left: (sideBarActive) ? MediaQuery.of(context).size.width*0.6 : 0,
-            top: (sideBarActive)? MediaQuery.of(context).size.height*0.2 : 0,
+            left: (sideBarActive) ? MediaQuery.of(context).size.width * 0.6 : 0,
+            top: (sideBarActive) ? MediaQuery.of(context).size.height * 0.2 : 0,
             child: RotationTransition(
-              turns: (sideBarActive) ? Tween(begin: -0.05, end: 0.0).animate(rotationController) : Tween(begin: 0.0, end: -0.05).animate(rotationController),
+              turns: (sideBarActive)
+                  ? Tween(begin: -0.05, end: 0.0).animate(rotationController)
+                  : Tween(begin: 0.0, end: -0.05).animate(rotationController),
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 200),
-                height: (sideBarActive) ? MediaQuery.of(context).size.height*0.7 : MediaQuery.of(context).size.height,
-                width: (sideBarActive) ? MediaQuery.of(context).size.width*0.8 : MediaQuery.of(context).size.width,
+                height: (sideBarActive)
+                    ? MediaQuery.of(context).size.height * 0.7
+                    : MediaQuery.of(context).size.height,
+                width: (sideBarActive)
+                    ? MediaQuery.of(context).size.width * 0.8
+                    : MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  color: Colors.white
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                    color: Colors.white),
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(40)),
                   child: HomePage(),
@@ -154,69 +206,82 @@ class _homeWithSidebarState extends State<homeWithSidebar> with TickerProviderSt
           Positioned(
             right: 0,
             top: 20,
-            child: (sideBarActive) ? IconButton(
-              padding: EdgeInsets.all(30),
-              onPressed: closeSideBar,
-              icon: Icon(
-                Icons.close,
-                color: Colors.black,
-                size: 30,
-              ),
-            ): InkWell(
-              onTap: openSideBar,
-              child: Container(
-                margin: EdgeInsets.all(17),
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('asset/images/menu.png')
+            child: (sideBarActive)
+                ? IconButton(
+                    padding: EdgeInsets.all(30),
+                    onPressed: closeSideBar,
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 30,
+                    ),
                   )
-                ),
-              ),
-
-            ),
+                : InkWell(
+                    onTap: openSideBar,
+                    child: Container(
+                      margin: EdgeInsets.all(17),
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('asset/images/menu.png'))),
+                    ),
+                  ),
           )
         ],
       ),
     );
   }
-  Row navigatorTitle(String name, bool isSelected)
-  {
+
+  Row navigatorTitle(String name, bool isSelected) {
     return Row(
       children: [
-        (isSelected) ? Container(
-          width: 5,
-            height: 60,
-          color: Color(0xffffac30),
-        ):
-        Container(width: 5,
-        height: 60,),
-        SizedBox(width: 10,height: 60,),
-        Text(name, style: TextStyle(
-          fontSize: 16,
-          fontWeight: (isSelected) ? FontWeight.w700: FontWeight.w400
-        ),)
+        (isSelected)
+            ? Container(
+                width: 5,
+                height: 60,
+                color: Color(0xffffac30),
+              )
+            : Container(
+                width: 5,
+                height: 60,
+              ),
+        SizedBox(
+          width: 10,
+          height: 60,
+        ),
+        Text(
+          name,
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: (isSelected) ? FontWeight.w700 : FontWeight.w400),
+        )
       ],
     );
   }
-  void closeSideBar()
-  {
+
+  void closeSideBar() {
     sideBarActive = false;
-    setState(() {
-
-    });
+    setState(() {});
   }
-  void openSideBar()
-  {
+
+  void openSideBar() {
     sideBarActive = true;
-    setState(() {
-
-    });
-
+    setState(() {});
   }
-  openmain()
-  {
+
+  openmain() {
     Navigator.pushNamed(context, '/loginPage');
+  }
+
+  openProfile() {
+    Navigator.pushNamed(context, '/ProfilePage');
+  }
+
+  openTransaction() {
+    Navigator.pushNamed(context, '/TransPage');
+  }
+  openHelp() {
+    Navigator.pushNamed(context, '/HelpPage');
   }
 }
